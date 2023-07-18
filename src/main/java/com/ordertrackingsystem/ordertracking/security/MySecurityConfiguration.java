@@ -14,6 +14,8 @@ public class MySecurityConfiguration {
 		http.authorizeHttpRequests().anyRequest().authenticated();
 
 		 http.formLogin();
+		
+		 //http.httpBasic();
 
 		http.csrf().disable();
 

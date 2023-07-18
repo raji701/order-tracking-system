@@ -25,6 +25,7 @@ import com.ordertrackingsystem.ordertracking.repository.ProductRepo;
 @RestController
 public class ExtraController {
 	
+	// auto wiring
 
 	@Autowired
 	private OrderRepo orderRepo;
