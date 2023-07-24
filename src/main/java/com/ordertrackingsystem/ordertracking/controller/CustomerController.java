@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ordertrackingsystem.ordertracking.entities.Customer;
 import com.ordertrackingsystem.ordertracking.repository.CustomerRepo;
+import com.ordertrackingsystem.ordertracking.services.CustomerService;
 
 @RestController
 public class CustomerController {
@@ -20,10 +21,13 @@ public class CustomerController {
 	@Autowired
 	private CustomerRepo customerRepo;
 
+	@Autowired
+	private CustomerService cs;
+
 	// 1.List of Customers
 	@GetMapping("/customers")
 	public List<Customer> listOfCustomers() {
-		return customerRepo.findAll();
+		return cs.getAllCustomers();
 	}
 	
 	@GetMapping("/customer/purchases/{id}")
