@@ -12,14 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ordertrackingsystem.ordertracking.entities.Customer;
-import com.ordertrackingsystem.ordertracking.repository.CustomerRepo;
 import com.ordertrackingsystem.ordertracking.services.CustomerService;
 
 @RestController
 public class CustomerController {
 
-	@Autowired
-	private CustomerRepo customerRepo;
+
 
 	@Autowired
 	private CustomerService cs;
@@ -29,25 +27,21 @@ public class CustomerController {
 	public List<Customer> listOfCustomers() {
 		return cs.getAllCustomers();
 	}
-	
+
 	@GetMapping("/customer/purchases/{id}")
 	public LinkedHashSet<String> purchases(@PathVariable ("id") Integer id) {
-		return customerRepo.customerPurchases(id);
+		return cs.purchases(id);
 	}
 
 	@PutMapping("/customer/update/{id}")
 	public String updateProfile(@PathVariable("id")int id ,@RequestBody Customer customer)
 	{
-		String email = customer.getEmail(); 
-		customerRepo.updateEmail(email ,id);
-		return "updated successfully";
+		return cs.updateProfile(id, customer); 
 	}
 	
 	@PatchMapping("/customer/name/{id}")
-	public String updateName(@PathVariable("id")int id ,@RequestBody Customer customer)
+	public String updateName1(@PathVariable("id")int id ,@RequestBody Customer customer)
 	{
-		String name = customer.getCustomerName(); 
-		customerRepo.updateName(name ,id);
-		return "updated successfully";
+		return cs.updateName(id ,customer);
 	}
 }

@@ -1,5 +1,6 @@
 package com.ordertrackingsystem.ordertracking.services;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,4 +20,22 @@ public class CustomerService {
     {
        return customerRepo.findAll();
     }
+
+    public LinkedHashSet<String> purchases(Integer id) {
+		return customerRepo.customerPurchases(id);
+	}
+
+    public String updateProfile(int id , Customer customer)
+	{
+		String email = customer.getEmail(); 
+		customerRepo.updateEmail(email ,id);
+		return "updated successfully";
+	}
+
+    public String updateName(int id ,Customer customer)
+	{
+		String name = customer.getCustomerName(); 
+		customerRepo.updateName(name ,id);
+		return "updated successfully";
+	}
 }
