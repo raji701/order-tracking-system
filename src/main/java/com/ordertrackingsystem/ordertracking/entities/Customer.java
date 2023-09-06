@@ -2,6 +2,8 @@ package com.ordertrackingsystem.ordertracking.entities;
 
 import java.util.List;
 
+import org.springframework.data.annotation.PersistenceConstructor;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -11,6 +13,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+
 
 @Entity
 @Table(name = "customers")
@@ -29,14 +33,15 @@ public class Customer {
 	private String email;
 
 	private String mobile;
+	
+	private String address;
 
 	// mapped by ref_customer_id column in orders table to resemble the relation
 	// between customers and orders tables in database
 	@JsonIgnore
 	@OneToMany(mappedBy = "customer")
 	private List<Order> orders;
-	
-	
+
 	// ---------------getters and setters---------------
 
 	public int getCustomerId() {
@@ -77,6 +82,14 @@ public class Customer {
 
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	

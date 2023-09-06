@@ -1,0 +1,1 @@
+create raji(laguage varchar(10),points int)

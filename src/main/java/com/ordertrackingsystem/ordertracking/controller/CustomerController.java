@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ordertrackingsystem.ordertracking.dto.NewDto;
 import com.ordertrackingsystem.ordertracking.entities.Customer;
 import com.ordertrackingsystem.ordertracking.services.CustomerService;
 
@@ -43,5 +44,12 @@ public class CustomerController {
 	public String updateName1(@PathVariable("id")int id ,@RequestBody Customer customer)
 	{
 		return cs.updateName(id ,customer);
+	}
+	
+	@GetMapping("/customer/new/{id}")
+	public  NewDto listOfDetails(@PathVariable("id")int id)
+	{
+		return cs.getCustomerDetailsWithOrders(id);
+		//return cs.aList(id);
 	}
 }

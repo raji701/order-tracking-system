@@ -2,10 +2,14 @@ package com.ordertrackingsystem.ordertracking.services;
 
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ordertrackingsystem.ordertracking.dto.NewDto;
+import com.ordertrackingsystem.ordertracking.dto.OrderDto;
 import com.ordertrackingsystem.ordertracking.entities.Customer;
 import com.ordertrackingsystem.ordertracking.repository.CustomerRepo;
 
@@ -13,7 +17,7 @@ import com.ordertrackingsystem.ordertracking.repository.CustomerRepo;
 public class CustomerService {
    
     @Autowired
-    CustomerRepo customerRepo ;
+    private CustomerRepo customerRepo ;
 
 
     public List<Customer> getAllCustomers()
@@ -38,4 +42,25 @@ public class CustomerService {
 		customerRepo.updateName(name ,id);
 		return "updated successfully";
 	}
+    
+    public List<NewDto> aList(int id)
+    {
+    	return customerRepo.customerDetailsById(id);
+    }
+    
+    public NewDto getCustomerDetailsWithOrders(int customerId) {
+        Optional<Customer> customerOptional = customerRepo.findById(customerId);
+        
+        if (customerOptional.isPresent()) {
+            Customer customer = customerOptional.get();
+            List<OrderDto> orderDTOList = customer.getOrders().stream()
+                .map(order -> new OrderDto(order.getOrderId(), order.getOrderDate(), order.getStatus()))
+                .collect(Collectors.toList());
+            return new NewDto(customer.getEmail(), customer.getCustomerName(), orderDTOList);
+        } else {
+            // Handle the case where the customer ID is not found
+            // You can throw an exception or return null, depending on your requirement.
+            return null;
+        }
+    }
 }
